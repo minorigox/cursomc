@@ -17,8 +17,13 @@ public class Categoria implements Serializable {
     private String nome;
 
     public Categoria(Integer id, String nome) {
+        super();
         this.id = id;
         this.nome = nome;
+    }
+
+    public Categoria() {
+        
     }
 
     @Override
