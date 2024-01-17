@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.osprasoft.cursomc.domain.enums.TipoCliente;
 
 import jakarta.persistence.CollectionTable;
@@ -27,8 +28,11 @@ public class Cliente implements Serializable {
     private String email;
     private String cpfCnpj;
     private Integer tipoPessoa;
+
+    @JsonManagedReference
     @OneToMany(mappedBy = "cliente")
     private List < Endereco > enderecos = new ArrayList<>();
+    
     @ElementCollection
     @CollectionTable(name = "telefone")
     private Set < String > telefones = new HashSet<>();
