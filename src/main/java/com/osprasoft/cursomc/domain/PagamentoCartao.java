@@ -14,9 +14,9 @@ public class PagamentoCartao extends Pagamento {
         this.numeroParcelas = numeroParcelas;
     }
 
-    public PagamentoCartao(Integer numeroParcelas) {
-        this.numeroParcelas = numeroParcelas;
+    public PagamentoCartao() {
     }
+    
     public Integer getNumeroParcelas() {
         return numeroParcelas;
     }
