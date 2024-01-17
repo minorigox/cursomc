@@ -16,6 +16,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Cliente implements Serializable {
@@ -36,8 +37,12 @@ public class Cliente implements Serializable {
     @ElementCollection
     @CollectionTable(name = "telefone")
     private Set < String > telefones = new HashSet<>();
+
+    @OneToOne
+    private List < Pedido > pedidos = new ArrayList<>();
     
     public Cliente(Integer id, String nome, String email, String cpfCnpj, TipoCliente tipoPessoa) {
+        super();
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -46,7 +51,6 @@ public class Cliente implements Serializable {
     }
 
     public Cliente() {
-        super();
     }
 
     @Override
