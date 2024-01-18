@@ -58,11 +58,9 @@ public class Categoria implements Serializable {
     public List<Produto> getProdutos() {
         return produtos;
     }
-
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
     }
-
     public Integer getId() {
         return id;
     }
