@@ -1,11 +1,8 @@
 package com.osprasoft.cursomc.domain;
 
 import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.osprasoft.cursomc.domain.enums.EstadoPagamento;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;

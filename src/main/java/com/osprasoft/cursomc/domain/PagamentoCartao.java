@@ -1,7 +1,6 @@
 package com.osprasoft.cursomc.domain;
 
 import com.osprasoft.cursomc.domain.enums.EstadoPagamento;
-
 import jakarta.persistence.Entity;
 
 @Entity

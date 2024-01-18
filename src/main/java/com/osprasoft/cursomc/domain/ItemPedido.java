@@ -1,9 +1,7 @@
 package com.osprasoft.cursomc.domain;
 
 import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 
