@@ -18,6 +18,8 @@ import com.osprasoft.cursomc.domain.Categoria;
 import com.osprasoft.cursomc.dto.CategoriaDTO;
 import com.osprasoft.cursomc.services.CategoriaService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
@@ -33,10 +35,11 @@ public class CategoriaResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity < Void > insert(Categoria obj) {
+    public ResponseEntity < Void > insert(@Valid @RequestBody CategoriaDTO objDTO) {
+        Categoria obj = service.fromDTO(objDTO);
         obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path(
-            "/{id}").buildAndExpand(obj.getId()).toUri();
+            "/{id}").buildAndExpand(objDTO.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 

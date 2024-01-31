@@ -12,6 +12,7 @@ import com.osprasoft.cursomc.repositories.CategoriaRepository;
 import com.osprasoft.cursomc.services.exception.DataIntegrityException;
 import com.osprasoft.cursomc.services.exception.ObjectNotFoundException;
 import com.osprasoft.cursomc.domain.Categoria;
+import com.osprasoft.cursomc.dto.CategoriaDTO;
 
 @Service
 public class CategoriaService {
@@ -58,6 +59,10 @@ public class CategoriaService {
         PageRequest pageRequest = PageRequest.of(
                 page, linesPerPage, Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
+    }
+
+    public Categoria fromDTO(CategoriaDTO objDTO) {
+        return new Categoria(objDTO.getId(), objDTO.getNome());
     }
     
 }
