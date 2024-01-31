@@ -2,8 +2,10 @@ package com.osprasoft.cursomc.services;
 
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import com.osprasoft.cursomc.repositories.CategoriaRepository;
+import com.osprasoft.cursomc.services.exception.DataIntegrityException;
 import com.osprasoft.cursomc.services.exception.ObjectNotFoundException;
 import com.osprasoft.cursomc.domain.Categoria;
 
@@ -28,6 +30,19 @@ public class CategoriaService {
     public Categoria update(Categoria obj) {
         find(obj.getId());
         return repo.save(obj);
+    }
+
+    public void delete(Integer id) {
+        if (id != null) {
+            find(id);
+            try {
+                repo.deleteById(id);
+            }
+            catch (DataIntegrityViolationException e) {
+                throw new DataIntegrityException(
+                    "Não é possível excluir uma categoria que possui produtos.");
+            }
+        }
     }
     
 }
