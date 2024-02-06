@@ -1,9 +1,11 @@
 package com.osprasoft.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.osprasoft.cursomc.domain.enums.EstadoPagamento;
 import jakarta.persistence.Entity;
 
 @Entity
+@JsonTypeName("pagamentoCartao")
 public class PagamentoCartao extends Pagamento {
     private static final long serialVersionUID = 1L;
     private Integer numeroParcelas;
