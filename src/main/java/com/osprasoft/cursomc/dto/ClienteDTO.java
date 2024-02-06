@@ -5,10 +5,12 @@ import java.io.Serializable;
 import org.hibernate.validator.constraints.Length;
 
 import com.osprasoft.cursomc.domain.Cliente;
+import com.osprasoft.cursomc.services.validation.ClienteUpdate;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
