@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +32,7 @@ public class ClienteService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    public Cliente find(Integer id) {
+    public Cliente find(@NonNull Integer id) {
         Optional < Cliente > obj = repo.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
             "Objeto não encontrado! Id: " + id + ", Tipo: " 
@@ -70,7 +71,7 @@ public class ClienteService {
     }
 
     public Page < Cliente > findPage(Integer page, 
-            Integer linesPerPage, String orderBy, String direction) {
+            Integer linesPerPage, String orderBy, @NonNull String direction) {
         PageRequest pageRequest = PageRequest.of(
                 page, linesPerPage, Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);

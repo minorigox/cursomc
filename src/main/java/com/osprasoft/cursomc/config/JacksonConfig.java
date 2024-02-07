@@ -3,6 +3,7 @@ package com.osprasoft.cursomc.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.osprasoft.cursomc.domain.PagamentoBoleto;
@@ -14,7 +15,7 @@ public class JacksonConfig {
     @Bean
     public Jackson2ObjectMapperBuilder objectMapperBuilder() {
         Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder() {
-            public void configure(ObjectMapper objectMapper) {
+            public void configure(@NonNull ObjectMapper objectMapper) {
                 objectMapper.registerSubtypes(PagamentoCartao.class);
                 objectMapper.registerSubtypes(PagamentoBoleto.class);
                 super.configure(objectMapper);

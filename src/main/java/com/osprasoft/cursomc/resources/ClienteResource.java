@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +30,7 @@ public class ClienteResource {
     private ClienteService service;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity < Cliente > find(@PathVariable Integer id) {
+    public ResponseEntity < Cliente > find(@PathVariable @NonNull Integer id) {
         Cliente obj = service.find(id);
 
         return ResponseEntity.ok().body(obj);
@@ -71,7 +72,7 @@ public class ClienteResource {
             @RequestParam(value = "page", defaultValue = "0") Integer page, 
             @RequestParam(value = "linesPerPage", defaultValue = "24")Integer linesPerPage, 
             @RequestParam(value = "orderBy", defaultValue = "nome")String orderBy, 
-            @RequestParam(value = "direction", defaultValue = "ASC")String direction) {
+            @RequestParam(value = "direction", defaultValue = "ASC") @NonNull String direction) {
         Page < Cliente > list = service.findPage(page, linesPerPage, orderBy, direction);
         Page < ClienteDTO > listDTO = list.map(obj -> new ClienteDTO(obj));
         return ResponseEntity.ok().body(listDTO);
