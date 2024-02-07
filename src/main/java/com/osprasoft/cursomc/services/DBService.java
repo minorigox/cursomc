@@ -96,7 +96,7 @@ public class DBService {
 
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
-
+		
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "São Paulo");
 		
@@ -107,8 +107,17 @@ public class DBService {
 		est1.getCidades().addAll(Arrays.asList(c1));
 		est2.getCidades().addAll(Arrays.asList(c2, c3));
 
-		estadoRepository.saveAll(Arrays.asList(est1, est2));
-		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		try {
+			estadoRepository.saveAll(Arrays.asList(est1, est2));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		try {
+			cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		
 		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "12345678900", TipoCliente.PESSOAFISICA);
 		cli1.getTelefones().addAll(Arrays.asList("987542136", "963524187"));
@@ -117,8 +126,17 @@ public class DBService {
 		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38741585", cli1, c2);
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
 
-		clienteRepository.saveAll(Arrays.asList(cli1));
-		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		try {
+			clienteRepository.saveAll(Arrays.asList(cli1));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		try {
+			enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		
 		SimpleDateFormat instantePedido = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		Pedido ped1 = new Pedido(null, instantePedido.parse("30/09/2017 10:32"), cli1, e1);
@@ -131,8 +149,17 @@ public class DBService {
 
 		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
 
-		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
-		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		try {
+			pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+		try {
+			pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 
 		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
 		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
@@ -145,6 +172,10 @@ public class DBService {
 		p2.getItens().addAll(Arrays.asList(ip3));
 		p3.getItens().addAll(Arrays.asList(ip2));
 
-		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+		try {
+			itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
     }
 }
