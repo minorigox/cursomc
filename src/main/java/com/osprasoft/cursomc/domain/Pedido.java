@@ -1,8 +1,10 @@
 package com.osprasoft.cursomc.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.CascadeType;
@@ -50,6 +52,7 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         StringBuilder builder = new StringBuilder();
         builder.append("Pedido nº: ");
         builder.append(getId());
@@ -64,7 +67,7 @@ public class Pedido implements Serializable {
             builder.append(item.toString());
         }
         builder.append("Valor total: ");
-        builder.append(getValorTotal());
+        builder.append(nf.format(getValorTotal()));
         return builder.toString();
     }
 
