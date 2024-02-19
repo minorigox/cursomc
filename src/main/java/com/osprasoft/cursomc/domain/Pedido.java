@@ -48,6 +48,26 @@ public class Pedido implements Serializable {
         this.enderecoEntrega = enderecoEntrega;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Pedido nº: ");
+        builder.append(getId());
+        builder.append(", Instante= ");
+        builder.append(getInstante());
+        builder.append(", Cliente: ");
+        builder.append(getCliente().getNome());
+        builder.append(", Situação do pagamento: ");
+        builder.append(getPagamento().getEstado().getDescricao());
+        builder.append(", \nDetalhes:\n");
+        for (ItemPedido item : getItens()) {
+            builder.append(item.toString());
+        }
+        builder.append("Valor total: ");
+        builder.append(getValorTotal());
+        return builder.toString();
+    }
+
     public double getValorTotal() {
         double soma = 0.0;
         for (ItemPedido ip : itens) {
