@@ -61,7 +61,7 @@ public class ItemPedido implements Serializable {
     public String toString() {
         NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         StringBuilder builder = new StringBuilder();
-        builder.append(geProduto().getNome());
+        builder.append(getProduto().getNome());
         builder.append(", Qtde: ");
         builder.append(getQuantidade());
         builder.append(", Preço unitário: ");
@@ -79,7 +79,7 @@ public class ItemPedido implements Serializable {
     public void setPedido(Pedido pedido) {
         this.id.setPedido(pedido);
     }
-    public Produto geProduto() {
+    public Produto getProduto() {
         return id.getProduto();
     }
     public void setProduto(Produto produto) {
