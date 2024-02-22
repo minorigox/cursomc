@@ -20,6 +20,7 @@ import com.osprasoft.cursomc.domain.PagamentoCartao;
 import com.osprasoft.cursomc.domain.Pedido;
 import com.osprasoft.cursomc.domain.Produto;
 import com.osprasoft.cursomc.domain.enums.EstadoPagamento;
+import com.osprasoft.cursomc.domain.enums.Perfil;
 import com.osprasoft.cursomc.domain.enums.TipoCliente;
 import com.osprasoft.cursomc.repositories.CategoriaRepository;
 import com.osprasoft.cursomc.repositories.CidadeRepository;
@@ -124,19 +125,26 @@ public class DBService {
 		
 		Cliente cli1 = new Cliente(null, "Maria Silva", "igor.minoru@outlook.com", "12345678900", TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli1.getTelefones().addAll(Arrays.asList("987542136", "963524187"));
+		cli1.addPerfil(Perfil.CLIENTE);
+
+		Cliente cli2 = new Cliente(null, "Ana Costa", "igor.minoru@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, pe.encode("456"));
+		cli2.getTelefones().addAll(Arrays.asList("987542137", "973524187"));
+		cli2.addPerfil(Perfil.ADMIN);
 
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "09670580", cli1, c1);
 		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38741585", cli1, c2);
+		Endereco e3 = new Endereco(null, "Avenida Floriano", "534", "null", "Centro", "38741345", cli2, c2);
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		cli2.getEnderecos().addAll(Arrays.asList(e3));
 
 		try {
-			clienteRepository.saveAll(Arrays.asList(cli1));
+			clienteRepository.saveAll(Arrays.asList(cli1, cli2));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		
 		try {
-			enderecoRepository.saveAll(Arrays.asList(e1, e2));
+			enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
