@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.osprasoft.cursomc.domain.Categoria;
@@ -53,9 +52,7 @@ public class DBService {
 	private PagamentoRepository pagamentoRepository;
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
-	@Autowired
-	private BCryptPasswordEncoder pe;
-    
+	
     public void instantiateTestDatabase() throws ParseException {
 
         Categoria cat1 = new Categoria(null, "Informática");
@@ -123,11 +120,11 @@ public class DBService {
 			System.out.println(e.getMessage());
 		}
 		
-		Cliente cli1 = new Cliente(null, "Maria Silva", "igor.minoru@outlook.com", "12345678900", TipoCliente.PESSOAFISICA, pe.encode("123"));
+		Cliente cli1 = new Cliente(null, "Maria Silva", "igor.minoru@outlook.com", "12345678900", TipoCliente.PESSOAFISICA, "123");
 		cli1.getTelefones().addAll(Arrays.asList("987542136", "963524187"));
 		cli1.addPerfil(Perfil.CLIENTE);
 
-		Cliente cli2 = new Cliente(null, "Ana Costa", "igor.minoru@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, pe.encode("456"));
+		Cliente cli2 = new Cliente(null, "Ana Costa", "igor.minoru@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, "456");
 		cli2.getTelefones().addAll(Arrays.asList("987542137", "973524187"));
 		cli2.addPerfil(Perfil.ADMIN);
 
