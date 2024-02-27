@@ -1,8 +1,8 @@
 package com.osprasoft.cursomc.security;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,26 +15,23 @@ public class UserSS implements UserDetails {
     private Integer id;
     private String email;
     private String senha;
-    private Set < Perfil > perfis;
+    private Collection < ? extends GrantedAuthority > authorities;
     
     public UserSS(Integer id, String email, String senha, Set < Perfil > perfis) {
         this.id = id;
         this.email = email;
         this.senha = senha;
-        this.perfis = perfis;
+        this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
     }
-
+    public UserSS() {
+    }
     public Integer getId() {
         return id;
     }
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (this.perfis.contains(Perfil.ADMIN)) return List.of(
-            new SimpleGrantedAuthority("ROLE_ADMIN"), 
-            new SimpleGrantedAuthority("ROLE_CLIENTE"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_CLIENTE"));
+    public Collection <? extends GrantedAuthority > getAuthorities() {
+        return authorities;
     }
-
     @Override
     public String getPassword() {
         return senha;
