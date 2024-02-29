@@ -3,11 +3,9 @@ package com.osprasoft.cursomc.services;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.osprasoft.cursomc.domain.Categoria;
 import com.osprasoft.cursomc.domain.Cidade;
 import com.osprasoft.cursomc.domain.Cliente;
@@ -20,6 +18,7 @@ import com.osprasoft.cursomc.domain.PagamentoCartao;
 import com.osprasoft.cursomc.domain.Pedido;
 import com.osprasoft.cursomc.domain.Produto;
 import com.osprasoft.cursomc.domain.enums.EstadoPagamento;
+import com.osprasoft.cursomc.domain.enums.Perfil;
 import com.osprasoft.cursomc.domain.enums.TipoCliente;
 import com.osprasoft.cursomc.repositories.CategoriaRepository;
 import com.osprasoft.cursomc.repositories.CidadeRepository;
@@ -34,6 +33,8 @@ import com.osprasoft.cursomc.repositories.ProdutoRepository;
 @Service
 public class DBService {
 
+	@Autowired
+    private BCryptPasswordEncoder pe;
     @Autowired
 	private CategoriaRepository categoriaRepository;
 	@Autowired
@@ -120,13 +121,13 @@ public class DBService {
 			System.out.println(e.getMessage());
 		}
 		
-		Cliente cli1 = new Cliente(null, "Maria Silva", "igor.minoru@outlook.com", "12345678900", TipoCliente.PESSOAFISICA, "123");
+		Cliente cli1 = new Cliente(null, "Maria Silva", "igor.minoru@outlook.com", "12345678900", TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli1.getTelefones().addAll(Arrays.asList("987542136", "963524187"));
-		//cli1.addPerfil(Perfil.CLIENTE);
+		cli1.addPerfil(Perfil.CLIENTE);
 
-		Cliente cli2 = new Cliente(null, "Ana Costa", "igor.minoru@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, "456");
+		Cliente cli2 = new Cliente(null, "Ana Costa", "igor.minoru@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, pe.encode("456"));
 		cli2.getTelefones().addAll(Arrays.asList("987542137", "973524187"));
-		//cli2.addPerfil(Perfil.ADMIN);
+		cli2.addPerfil(Perfil.ADMIN);
 
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 303", "Jardim", "09670580", cli1, c1);
 		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38741585", cli1, c2);
