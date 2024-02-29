@@ -33,9 +33,6 @@ public class ClienteService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder pe;
-
     public Cliente find(@NonNull Integer id) {
         Optional < Cliente > obj = repo.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -86,7 +83,7 @@ public class ClienteService {
     }
 
     public Cliente fromDTO(ClienteNewDTO objDTO) {
-        Cliente cli = new Cliente(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpfCnpj(), TipoCliente.toEnum(objDTO.getTipoPessoa()), pe.encode(objDTO.getSenha()));
+        Cliente cli = new Cliente(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpfCnpj(), TipoCliente.toEnum(objDTO.getTipoPessoa()), objDTO.getSenha());
         Cidade cid = new Cidade(objDTO.getCidadeId(), null, null);
         Endereco end = new Endereco(null, objDTO.getLogradouro(), objDTO.getNumero(), objDTO.getComplemento(), objDTO.getBairro(), objDTO.getCep(), cli, cid);
         cli.getEnderecos().add(end);
