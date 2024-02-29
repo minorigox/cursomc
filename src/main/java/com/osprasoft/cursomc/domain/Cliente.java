@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.osprasoft.cursomc.domain.enums.Perfil;
 import com.osprasoft.cursomc.domain.enums.TipoCliente;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
@@ -63,7 +64,7 @@ public class Cliente implements Serializable {
     }
 
     public Cliente() {
-        //addPerfil(Perfil.CLIENTE);
+        addPerfil(Perfil.CLIENTE);
     }
 
     @Override
@@ -145,10 +146,10 @@ public class Cliente implements Serializable {
     public void setTipoPessoa(TipoCliente tipoPessoa) {
         this.tipoPessoa = tipoPessoa.getCod();
     }
-    // public Set < Perfil > getPerfis() {
-    //     return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
-    // }
-    // public void addPerfil(Perfil perfil) {
-    //     perfis.add(perfil.getCod());
-    // }
+    public Set < Perfil > getPerfis() {
+        return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+    }
+    public void addPerfil(Perfil perfil) {
+        perfis.add(perfil.getCod());
+    }
 }
