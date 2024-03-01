@@ -1,5 +1,7 @@
 package com.osprasoft.cursomc.resources.exception;
 
+import javax.naming.AuthenticationException;
+
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +42,14 @@ public class ResourceExceptionHandler {
                     err.addError(x.getField(), x.getDefaultMessage());
                 }
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<StandardError> authorization(
+        AuthenticationException e, HttpServletRequest request) {
+            StandardError err = new StandardError(
+                HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
     }
     
 }
