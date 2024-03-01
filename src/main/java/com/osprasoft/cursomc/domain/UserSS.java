@@ -23,6 +23,10 @@ public class UserSS implements UserDetails {
             x.getDescricao())).collect(Collectors.toList());
     }
 
+    public boolean hasRole(Perfil perfil) {
+        return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
+    }
+    
     public Integer getId() {
         return this.id;
     }
