@@ -15,6 +15,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -23,13 +27,18 @@ public class SecurityConfig {
     @Autowired
     private Environment env;
 
+    @Autowired
+    private SecurityFilter securityFilter;
+
     private static final String[] PUBLIC_MATCHERS = {
-        "/h2-console/**"    
+            "/h2-console/**",
+            "/login"
     };
-    
+
     private static final String[] PUBLIC_MATCHERS_GET = {
-        "/produtos/**",
-        "/categorias/**"    
+            "/produtos/**",
+            "/categorias/**",
+            "/clientes/**"
     };
 
     @Bean
@@ -37,26 +46,35 @@ public class SecurityConfig {
         if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
             http.headers((headers) -> headers.disable());
         }
-               
+
         http.csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth.requestMatchers(
-                HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
-            .requestMatchers(PUBLIC_MATCHERS).permitAll()
-            .anyRequest().authenticated());
-            
+                .sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth.requestMatchers(
+                        HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
+                        .requestMatchers(PUBLIC_MATCHERS).permitAll()
+                        .anyRequest().authenticated())
+                        .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
+    // Prof. Nelio Alves
+    // @Bean
+    // CorsConfigurationSource corsConfigurationSource() {
+    //     final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    //     source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+    //     return source;
+    // }
+
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+            throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder bCryptPasswordEncoder() {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
 }
