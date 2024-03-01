@@ -28,14 +28,17 @@ public class SecurityConfig {
     private SecurityFilter securityFilter;
 
     private static final String[] PUBLIC_MATCHERS = {
-            "/h2-console/**",
-            "/login"
+        "/h2-console/**",
+        "/login"
     };
 
     private static final String[] PUBLIC_MATCHERS_GET = {
-            "/produtos/**",
-            "/categorias/**",
-            "/clientes/**"
+        "/produtos/**",
+        "/categorias/**"
+    };
+
+    private static final String[] PUBLIC_MATCHERS_POST = {
+        "/clientes/**"
     };
 
     @Bean
@@ -50,6 +53,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth.requestMatchers(
                         HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
                         .requestMatchers(PUBLIC_MATCHERS).permitAll()
+                        .requestMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
                         .anyRequest().authenticated())
                         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
