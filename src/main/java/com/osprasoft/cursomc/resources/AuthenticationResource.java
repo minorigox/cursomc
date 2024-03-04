@@ -16,9 +16,11 @@ import com.osprasoft.cursomc.domain.Cliente;
 import com.osprasoft.cursomc.domain.UserSS;
 import com.osprasoft.cursomc.dto.ClienteDTO;
 import com.osprasoft.cursomc.dto.CredenciaisDTO;
+import com.osprasoft.cursomc.dto.EmailDTO;
 import com.osprasoft.cursomc.dto.LoginResponseDTO;
 import com.osprasoft.cursomc.repositories.ClienteRepository;
 import com.osprasoft.cursomc.security.JwtUtil;
+import com.osprasoft.cursomc.services.AuthService;
 import com.osprasoft.cursomc.services.UserService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,6 +38,9 @@ public class AuthenticationResource {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private AuthService authService;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid CredenciaisDTO dto) {
@@ -60,6 +65,12 @@ public class AuthenticationResource {
         UserSS user = UserService.authenticated();
         String token = jwtUtil.generateToken(user);
         response.addHeader("Authorization", "Bearer " + token);
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/forgot", method = RequestMethod.POST)
+    public ResponseEntity < Void > forgot(@RequestBody @Valid EmailDTO objDto) {
+        authService.sendNewPassword(objDto.getEmail());
         return ResponseEntity.noContent().build();
     }
 }

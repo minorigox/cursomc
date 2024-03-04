@@ -28,8 +28,7 @@ public class SecurityConfig {
     private SecurityFilter securityFilter;
 
     private static final String[] PUBLIC_MATCHERS = {
-        "/h2-console/**",
-        "/login"
+        "/h2-console/**"
     };
 
     private static final String[] PUBLIC_MATCHERS_GET = {
@@ -38,7 +37,8 @@ public class SecurityConfig {
     };
 
     private static final String[] PUBLIC_MATCHERS_POST = {
-        "/clientes/**"
+        "/clientes/**",
+        "/forgot/**"
     };
 
     @Bean
