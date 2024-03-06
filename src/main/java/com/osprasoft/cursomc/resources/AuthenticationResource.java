@@ -1,6 +1,5 @@
 package com.osprasoft.cursomc.resources;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -63,8 +62,7 @@ public class AuthenticationResource {
     @RequestMapping(value = "/refresh_token", method = RequestMethod.POST)
     public ResponseEntity < Void > refreshToken(HttpServletResponse response) {
         UserSS user = UserService.authenticated();
-        String token = jwtUtil.generateToken(user);
-        response.addHeader("Authorization", "Bearer " + token);
+        jwtUtil.generateToken(user);
         return ResponseEntity.noContent().build();
     }
 
