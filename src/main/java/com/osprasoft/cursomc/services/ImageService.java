@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.commons.io.FilenameUtils;
+import org.imgscalr.Scalr;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,5 +47,18 @@ public class ImageService {
         } catch (IOException e) {
             throw new FileException("Erro ao ler arquivo");
         }
-    }    
+    }
+
+    public BufferedImage cropSquare(BufferedImage sourceImage) {
+        int min = (sourceImage.getHeight() <= sourceImage.getWidth())
+                ? sourceImage.getHeight() : sourceImage.getWidth();
+        return Scalr.crop(sourceImage, 
+                sourceImage.getWidth()/2 - (min/2), 
+                sourceImage.getHeight()/2 - (min/2), 
+                min, min);
+    }
+
+    public BufferedImage resize(BufferedImage sourceImage, int size) {
+        return Scalr.resize(sourceImage, Scalr.Method.ULTRA_QUALITY, size);
+    }
 }
